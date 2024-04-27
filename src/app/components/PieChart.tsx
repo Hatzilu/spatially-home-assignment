@@ -16,13 +16,13 @@ const PieChart = ({ data, width, height }: Props) => {
 	// .sort(/null);
 
 	useEffect(() => {
-		const svg = d3.select(svgRef.current);
-
-		const radius = Math.min(width, height) / 2;
-
-		const formattedData = d3.pie<ChartData>().value((d) => d.value)(data);
-		const arcGenerator = d3.arc<ChartData>().innerRadius(0).outerRadius(radius);
-		const color = d3.scaleOrdinal<string, string, string>().range(d3.schemeSet2);
+		const svg = d3
+			.select(svgRef.current)
+			.attr('width', width)
+			.attr('height', height)
+			.style('overflow', 'visible')
+			.style('margin-top', '400px')
+			.style('margin-left', '400px');
 
 		svg.selectAll('path')
 			.data(formattedData)
