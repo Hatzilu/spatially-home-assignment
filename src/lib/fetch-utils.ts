@@ -1,6 +1,6 @@
-import { ChartData, HbsEntry, PatientEntry } from '@/types/chart';
-import { BASE_URL } from '../../consts/consts';
+import { ChartData } from '@/types/chart';
 import { APIError } from '@/types/error';
+import { BASE_URL } from '../../consts/consts';
 
 export async function getChartData(): Promise<ChartData[] | APIError> {
 	const res = await fetch(`${BASE_URL}/api/pieChartData`);

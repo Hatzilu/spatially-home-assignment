@@ -1,6 +1,5 @@
-import { readFileSync } from 'fs';
-import path from 'path';
-import { readFile, utils } from 'xlsx';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import * as XLSX from 'xlsx';
 
 export function spreadsheetToJSON<T>(fileName: 'patients.xlsx' | 'hbs.xlsx') {
