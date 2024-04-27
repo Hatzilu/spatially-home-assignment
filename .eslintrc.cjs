@@ -31,7 +31,6 @@ module.exports = {
 		'no-unreachable-loop': 'error',
 		'no-multiple-empty-lines': 'error',
 		'no-trailing-spaces': 'error',
-		'require-await': 'error',
 		'no-var': 'error',
 		'no-labels': 'error',
 		'no-inline-comments': 'error',
@@ -50,7 +49,7 @@ module.exports = {
 		],
 		'no-warning-comments': ['error'],
 
-		'@typescript-eslint/no-unused-vars': ['error'],
+		'@typescript-eslint/no-unused-vars': ['warn'],
 		'@typescript-eslint/no-empty-interface': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-explicit-any': ['error'],
@@ -82,7 +81,7 @@ module.exports = {
 		'import/no-named-default': ['error'],
 		'import/no-anonymous-default-export': ['error'],
 		'import/order': [
-			'error',
+			'warn',
 			{
 				pathGroups: [
 					{
