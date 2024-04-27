@@ -3,12 +3,7 @@ module.exports = {
 	env: {
 		node: true,
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:import/typescript',
-		'next/core-web-vitals',
-	],
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:import/typescript'],
 	reportUnusedDisableDirectives: true,
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -36,6 +31,7 @@ module.exports = {
 		'no-unreachable-loop': 'error',
 		'no-multiple-empty-lines': 'error',
 		'no-trailing-spaces': 'error',
+		'require-await': 'error',
 		'no-var': 'error',
 		'no-labels': 'error',
 		'no-inline-comments': 'error',
