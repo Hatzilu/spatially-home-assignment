@@ -5,7 +5,7 @@ import { APIError } from '@/types/error';
 import { patientsToPieChartData } from '@/lib/chart-utils';
 import { HbsEntry, PatientEntry } from '@/types/chart';
 
-export async function GET() {
+export function GET() {
 	try {
 		const patients = spreadsheetToJSON<PatientEntry>('patients.xlsx');
 		const hbs = spreadsheetToJSON<HbsEntry>('hbs.xlsx');

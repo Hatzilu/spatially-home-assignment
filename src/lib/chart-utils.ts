@@ -15,7 +15,6 @@ function healthBarriersToMap(hbs: HbsEntry[]) {
 }
 
 export function patientsToPieChartData(patients: PatientEntry[], hbs: HbsEntry[]) {
-	const barrierNameToCountMap = new Map<string, number>();
 	const barrierToCountObject: Record<string, number> = {};
 	const hbsMap = healthBarriersToMap(hbs);
 
