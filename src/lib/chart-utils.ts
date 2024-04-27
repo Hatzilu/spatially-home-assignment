@@ -21,13 +21,11 @@ export function patientsToPieChartData(patients: PatientEntry[], hbs: HbsEntry[]
 	// than iterating over an array inside an array.
 	patients.forEach((patient) => {
 		// For patients with no barrier ID, i will simply ignore them for now since no instructions were specified about their usage.
-		let barrierName;
 		if (!hbsMap.has(patient.barrier_id)) {
-			// barrierName = 'Other';
 			return;
-		} else {
-			barrierName = hbsMap.get(patient.barrier_id)!;
 		}
+
+		const barrierName = hbsMap.get(patient.barrier_id)!;
 
 		if (!barrierToCountObject[barrierName]) {
 			barrierToCountObject[barrierName] = 1;

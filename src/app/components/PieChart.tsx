@@ -6,6 +6,7 @@ import { PIE_CHART_COLOR_RANGE } from '../../../consts/chart.consts';
 import PieText from './PieText/PieText';
 import Legend from './Legend/Legend';
 
+// i usually tend to mark props as readonly in the codebases i work with to ensure me and other people won't accidentally directlyt mutate the props.
 type Props = {
 	readonly data: ChartData[];
 	readonly width: number;
@@ -18,6 +19,7 @@ const PieChart = ({ data, width, height }: Props) => {
 	const svgRef = useRef<SVGSVGElement | null>(null);
 
 	const radius = useMemo(() => Math.min(width, height) / 2, [width, height]);
+
 	const formattedData = useMemo(() => {
 		const generator = d3.pie<ChartData>().value((d) => d.value);
 
@@ -29,6 +31,9 @@ const PieChart = ({ data, width, height }: Props) => {
 		[width],
 	);
 
+	// I'm not sure if this is the best approach for writing d3.js within a React application, but the only
+	// library i found with react bindings for d3.js was very outdated and had no type declarations, so i opted to
+	// write the code myself
 	useEffect(() => {
 		const svg = d3
 			.select(svgRef.current)
