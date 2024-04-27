@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { spreadsheetToJSON } from '@/lib/xlsx-utils';
+import { APIError } from '@/types/error';
 
 export async function GET() {
 	try {
@@ -8,9 +9,8 @@ export async function GET() {
 		return NextResponse.json(data);
 	} catch (e) {
 		if (e instanceof Error) {
-			console.error('Failed to get hbs data, error:', e.message);
-			// throw new Error(e.message);
-			return NextResponse.json({ error: e.message });
+			console.error('Failed to get patients data, error:', e.message);
+			return NextResponse.json<APIError>({ error: 'Internal server error' }, { status: 500 });
 		}
 	}
 }
