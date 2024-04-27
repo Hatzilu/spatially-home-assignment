@@ -9,3 +9,5 @@ export type HbsEntry = {
 	barrier_id: string;
 	barrier_name: string;
 };
+
+export type ChartData = Record<string, number>;
