@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import { ChartData } from '@/types/chart';
 import PieText from './PieText/PieText';
 import Legend from './Legend/Legend';
+import { PIE_CHART_COLOR_RANGE } from '../../../consts/chart.consts';
 
 type Props = {
 	data: ChartData[];
@@ -11,7 +12,7 @@ type Props = {
 	height: number;
 };
 
-const color = d3.scaleOrdinal<string, string, string>().range(d3.schemeSet2);
+const color = d3.scaleOrdinal<string, string, string>().range(PIE_CHART_COLOR_RANGE);
 
 const PieChart = ({ data, width, height }: Props) => {
 	const svgRef = useRef<SVGSVGElement | null>(null);
