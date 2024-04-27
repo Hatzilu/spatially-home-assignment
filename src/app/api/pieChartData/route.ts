@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { NextResponse } from 'next/server';
 import { spreadsheetToJSON } from '@/lib/xlsx-utils';
 import { APIError } from '@/types/error';
@@ -11,7 +10,6 @@ export function GET() {
 		const hbs = spreadsheetToJSON<HbsEntry>('hbs.xlsx');
 
 		const data = patientsToPieChartData(patients, hbs);
-		console.log({ p: path.join(process.cwd(), 'src/data/patients.xlsx') });
 
 		return NextResponse.json(data);
 	} catch (error) {

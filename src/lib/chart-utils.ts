@@ -9,7 +9,6 @@ function healthBarriersToMap(hbs: HbsEntry[]) {
 	const map = new Map<string, string>();
 	hbs.forEach((barrier) => {
 		map.set(barrier.barrier_id, barrier.barrier_name);
-		console.log(barrier.barrier_id, 'is', barrier.barrier_name);
 	});
 	return map;
 }
