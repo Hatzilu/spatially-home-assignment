@@ -1,10 +1,10 @@
 import React from 'react';
 
 type Props = {
-	index: number;
-	label: string;
-	fill: string;
-	paddingTop: number;
+	readonly index: number;
+	readonly label: string;
+	readonly fill: string;
+	readonly paddingTop: number;
 };
 const Legend = ({ label, index, fill, paddingTop }: Props) => {
 	return (

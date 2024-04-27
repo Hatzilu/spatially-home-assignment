@@ -7,9 +7,9 @@ import Legend from './Legend/Legend';
 import { PIE_CHART_COLOR_RANGE } from '../../../consts/chart.consts';
 
 type Props = {
-	data: ChartData[];
-	width: number;
-	height: number;
+	readonly data: ChartData[];
+	readonly width: number;
+	readonly height: number;
 };
 
 const color = d3.scaleOrdinal<string, string, string>().range(PIE_CHART_COLOR_RANGE);

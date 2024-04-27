@@ -5,11 +5,11 @@ import { ChartData, PieCoordinate } from '@/types/chart';
 import { LINE_PADDING } from '../../../../consts/chart.consts';
 
 type Props = {
-	radius: number;
-	index: number;
-	group: d3.PieArcDatum<ChartData>;
-	arcGenerator: d3.Arc<any, d3.PieArcDatum<ChartData>>;
-	fill: string;
+	readonly radius: number;
+	readonly index: number;
+	readonly group: d3.PieArcDatum<ChartData>;
+	readonly arcGenerator: d3.Arc<any, d3.PieArcDatum<ChartData>>;
+	readonly fill: string;
 };
 
 const PieText = ({ radius, index, group, arcGenerator, fill }: Props) => {
