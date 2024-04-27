@@ -6,13 +6,12 @@ import { LINE_PADDING } from '../../../../consts/chart.consts';
 
 type Props = {
 	readonly radius: number;
-	readonly index: number;
 	readonly group: d3.PieArcDatum<ChartData>;
-	readonly arcGenerator: d3.Arc<any, d3.PieArcDatum<ChartData>>;
+	readonly arcGenerator: d3.Arc<unknown, d3.PieArcDatum<ChartData>>;
 	readonly fill: string;
 };
 
-const PieText = ({ radius, index, group, arcGenerator, fill }: Props) => {
+const PieText = ({ radius, group, arcGenerator, fill }: Props) => {
 	const sliceInfo = {
 		...group,
 		innerRadius: 0,

@@ -1,5 +1,5 @@
-import PatientsPieChart from './components/PatientsPieChart';
 import { Suspense } from 'react';
+import PatientsPieChart from './components/PatientsPieChart';
 
 export default function Home() {
 	return (

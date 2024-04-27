@@ -2,9 +2,9 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import * as d3 from 'd3';
 import { ChartData } from '@/types/chart';
+import { PIE_CHART_COLOR_RANGE } from '../../../consts/chart.consts';
 import PieText from './PieText/PieText';
 import Legend from './Legend/Legend';
-import { PIE_CHART_COLOR_RANGE } from '../../../consts/chart.consts';
 
 type Props = {
 	readonly data: ChartData[];
@@ -48,12 +48,11 @@ const PieChart = ({ data, width, height }: Props) => {
 	return (
 		<svg width={width} height={height} ref={svgRef}>
 			<g transform={`translate(${width / 2}, ${height / 2})`}>
-				{formattedData.map((entry, i) => (
+				{formattedData.map((entry) => (
 					<PieText
 						arcGenerator={arcGenerator}
 						fill={color(entry.data.value.toString())}
 						group={entry}
-						index={i}
 						radius={radius}
 						key={entry.value}
 					/>
