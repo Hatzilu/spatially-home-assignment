@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { spreadsheetToJSON } from '@/lib/xlsx-utils';
 import { APIError } from '@/types/error';
 
-export function GET() {
+export async function GET() {
 	try {
 		const data = spreadsheetToJSON('patients.xlsx');
 
