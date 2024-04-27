@@ -10,4 +10,4 @@ export type HbsEntry = {
 	barrier_name: string;
 };
 
-export type ChartData = Record<string, number>;
+export type ChartData = { label: string; value: number; percentage: number };

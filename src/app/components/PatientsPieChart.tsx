@@ -1,13 +1,31 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import PieChart from './PieChart';
+import { ChartData } from '@/types/chart';
+import { getChartData } from '@/lib/fetch-utils';
 
-const PatientsPieChart = async () => {
-	const data = await fetch('http://localhost:3000/api/patients');
+const PatientsPieChart = () => {
+	const [patients, setPatients] = useState<ChartData[]>([]);
+	const [error, setError] = useState('');
 
-	// const json = data.json();
+	useEffect(() => {
+		getChartData().then((result) => {
+			if ('error' in result) {
+				setError(result.error.toString());
+				return;
+			}
+			setError('');
+			setPatients(result);
+		});
+	}, []);
+	if (error) {
+		return <div>{error}</div>;
+	}
+	console.log(patients);
+
 	// console.log({ json });
-	return <div>{JSON.stringify(data)}</div>;
-	// return <PieChart />;
+	// return <code>{JSON.stringify(patients, null, 2)}</code>;
+	return <PieChart data={patients} width={400} height={600} />;
 };
 
 export default PatientsPieChart;

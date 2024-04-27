@@ -1,29 +1,48 @@
-import React from 'react';
+'use client';
+import React, { LegacyRef, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { DataEntry } from '@/types/chart';
+import { ChartData } from '@/types/chart';
+import Arc from './Arc/Arc';
+import { pieGenerator } from '@/lib/chart-utils';
 
 type Props = {
-	data: DataEntry[];
+	data: ChartData[];
 	width: number;
 	height: number;
-	marginTop: number;
-	marginRight: number;
-	marginBottom: number;
-	marginLeft: number;
 };
-const PieChart = ({ data, width, height, marginTop, marginRight, marginBottom, marginLeft }: Props) => {
-	const x = d3.scaleLinear([0, data.length - 1], [marginLeft, width - marginRight]);
-	const ext = d3.extent(data) as [string, string];
-	const y = d3.scaleLinear(ext, [height - marginBottom, marginTop]);
-	const line = d3.line((d, i) => x(i), y);
+const PieChart = ({ data, width, height }: Props) => {
+	const svgRef = useRef<SVGSVGElement | null>(null);
+
+	// .sort(/null);
+
+	useEffect(() => {
+		const svg = d3.select(svgRef.current);
+
+		const radius = Math.min(width, height) / 2;
+
+		const formattedData = d3.pie<ChartData>().value((d) => d.value)(data);
+		const arcGenerator = d3.arc<ChartData>().innerRadius(0).outerRadius(radius);
+		const color = d3.scaleOrdinal<string, string, string>().range(d3.schemeSet2);
+
+		svg.selectAll('path')
+			.data(formattedData)
+			.join('path')
+			.attr('d', arcGenerator)
+			.attr('fill', (d) => color(d.value));
+
+		svg.selectAll('text')
+			.data(formattedData)
+			.enter()
+			.append('text')
+			.attr('transform', (d) => `translate(${arcGenerator.centroid(d)})`)
+			.attr('text-anchor', 'middle');
+	}, [data]);
+
 	return (
-		<svg width={width} height={height}>
-			<path fill="none" stroke="currentColor" strokeWidth="1.5" d={line(data)} />
-			<g fill="white" stroke="currentColor" strokeWidth="1.5">
-				{data.map((d, i) => (
-					<circle key={i} cx={x(i)} cy={y(d)} r="2.5" />
-				))}
-			</g>
+		<svg width={width} height={height} ref={svgRef}>
+			{/* {data.map((entry, i) => (
+				<Arc entry={entry} key={entry.label} />
+			))} */}
 		</svg>
 	);
 };
