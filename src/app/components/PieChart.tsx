@@ -20,7 +20,8 @@ const PieChart = ({ data, width, height }: Props) => {
 	const radius = useMemo(() => Math.min(width, height) / 2, [width, height]);
 	const formattedData = useMemo(() => {
 		const generator = d3.pie<ChartData>().value((d) => d.value);
-		return generator(data);
+
+		return generator(data).sort((a, b) => a.data.label.localeCompare(b.data.label));
 	}, [data]);
 
 	const arcGenerator = useMemo(
@@ -59,16 +60,16 @@ const PieChart = ({ data, width, height }: Props) => {
 				))}
 			</g>
 			<g transform={`translate(${width / 2 + 300}, ${height / 4 - 125})`}>
-				<text fontWeight={500} fill="white">
-					Health Barriers
+				<text fontWeight={600} fill="white">
+					Health Barrier
 				</text>
 				{formattedData.map((entry, i) => (
 					<Legend
-						key={entry.data.label}
+						key={entry.value}
 						index={i}
 						fill={color(entry.data.value.toString())}
 						label={entry.data.label}
-						paddingTop={30}
+						paddingTop={20}
 					/>
 				))}
 			</g>

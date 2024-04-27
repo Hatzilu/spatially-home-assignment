@@ -9,7 +9,7 @@ type Props = {
 const Legend = ({ label, index, fill, paddingTop }: Props) => {
 	return (
 		<g transform={`translate(10,${paddingTop + 30 * index + 1})`}>
-			<circle r={10} fill={fill} />
+			<circle r={8} fill={fill} />
 			<text fontWeight={200} transform="translate(15, 5)" fill="white">
 				{label}
 			</text>
