@@ -16,7 +16,8 @@ export function patientsToPieChartData(patients: PatientEntry[], hbs: HbsEntry[]
 		// For patients with no barrier ID, i will simply consider them under "Other".
 		let barrierName;
 		if (!hbsMap.has(patient.barrier_id)) {
-			barrierName = 'Other';
+			// barrierName = 'Other';
+			return;
 		} else {
 			barrierName = hbsMap.get(patient.barrier_id)!;
 		}

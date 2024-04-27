@@ -11,3 +11,5 @@ export type HbsEntry = {
 };
 
 export type ChartData = { label: string; value: number; percentage: number };
+
+export type PieCoordinate = [number, number];

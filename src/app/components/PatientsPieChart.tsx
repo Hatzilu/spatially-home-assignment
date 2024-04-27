@@ -18,13 +18,11 @@ const PatientsPieChart = () => {
 			setPatients(result);
 		});
 	}, []);
+
 	if (error) {
 		return <div>{error}</div>;
 	}
-	console.log(patients);
 
-	// console.log({ json });
-	// return <code>{JSON.stringify(patients, null, 2)}</code>;
 	return <PieChart data={patients} width={400} height={600} />;
 };
 
