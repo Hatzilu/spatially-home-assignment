@@ -1,8 +1,9 @@
 'use client';
 import React, { ChangeEvent, useMemo, useState } from 'react';
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { HbsEntry } from '@/types/chart';
 import { PatientTableEntry } from '@/types/table.types';
+import Table from '../Table/Table';
 
 type Props = {
 	readonly hbs: HbsEntry[];
@@ -10,11 +11,15 @@ type Props = {
 };
 
 const PatientsDataTable = ({ hbs, patients }: Props) => {
-	const [selectedHb, setSelectedHb] = useState('');
+	const [selectedBarrierName, setSelectedBarrierName] = useState('');
 
-	console.log(selectedHb);
+	const onChangeHb = (e: ChangeEvent<HTMLSelectElement>) => setSelectedBarrierName(e.target.value);
 
-	const onChangeHb = (e: ChangeEvent<HTMLSelectElement>) => setSelectedHb(e.target.value);
+	const filteredPatients = useMemo(
+		() =>
+			selectedBarrierName ? patients.filter((p) => p.barrier_name === selectedBarrierName) : patients,
+		[patients, selectedBarrierName],
+	);
 
 	const columns = useMemo<ColumnDef<PatientTableEntry, unknown>[]>(
 		() => [
@@ -31,17 +36,12 @@ const PatientsDataTable = ({ hbs, patients }: Props) => {
 				header: 'Health barrier',
 			},
 		],
-		[patients],
+		[filteredPatients],
 	);
-
-	const table = useReactTable({
-		data: patients,
-		columns: columns,
-		getCoreRowModel: getCoreRowModel(),
-	});
 
 	return (
 		<div className="flex flex-col gap-5">
+			<h3>Patients ({patients.length})</h3>
 			<select
 				id="countries"
 				aria-placeholder="health barrier"
@@ -50,34 +50,13 @@ const PatientsDataTable = ({ hbs, patients }: Props) => {
 			>
 				<option value="">Choose a health barrier</option>
 				{hbs.map((option) => (
-					<option key={option.barrier_id} value={option.barrier_id}>
-						{option.barrier_name}
+					<option key={option.barrier_id} value={option.barrier_name}>
+						{option.barrier_name} (
+						{patients.filter((p) => p.barrier_name === option.barrier_name).length})
 					</option>
 				))}
 			</select>
-			<table>
-				<thead>
-					{table.getHeaderGroups().map((headerGroup) => (
-						<tr key={headerGroup.id}>
-							{headerGroup.headers.map((header) => (
-								<th key={header.id}>{header.column.columnDef.header?.toString()}</th>
-							))}
-						</tr>
-					))}
-				</thead>
-				<tbody>
-					{table.getRowModel().rows.map((row) => (
-						<tr key={row.id}>
-							{row.getVisibleCells().map((cell) => (
-								<td key={cell.id}>
-									{flexRender(cell.column.columnDef.cell, cell.getContext())}
-								</td>
-							))}
-						</tr>
-					))}
-				</tbody>
-				=
-			</table>
+			<Table data={filteredPatients} columns={columns} />
 		</div>
 	);
 };
