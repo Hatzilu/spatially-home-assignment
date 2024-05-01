@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { ChartData } from '@/types/chart';
 import { getChartData } from '@/lib/fetch-utils';
-import PieChart from './PieChart';
+import PieChart from '../PieChart/PieChart';
 
 const PatientsPieChart = () => {
 	const [patients, setPatients] = useState<ChartData[]>([]);

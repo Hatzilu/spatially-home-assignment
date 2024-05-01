@@ -2,9 +2,9 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import * as d3 from 'd3';
 import { ChartData } from '@/types/chart';
-import { PIE_CHART_COLOR_RANGE } from '../../../consts/chart.consts';
-import PieText from './PieText/PieText';
-import Legend from './Legend/Legend';
+import { PIE_CHART_COLOR_RANGE } from '../../../../consts/chart.consts';
+import PieText from '../PieText/PieText';
+import Legend from '../Legend/Legend';
 
 // i usually tend to mark props as readonly in the codebases i work with to ensure me and other people won't accidentally directlyt mutate the props.
 type Props = {
