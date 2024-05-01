@@ -5,7 +5,9 @@ import { HbsEntry } from '@/types/chart';
 
 export function GET() {
 	try {
-		const patients = spreadsheetToJSON<HbsEntry>('patients.xlsx');
+		const patients = spreadsheetToJSON<HbsEntry>('patients.xlsx').filter((patient) =>
+			Boolean(patient.barrier_id),
+		);
 
 		return NextResponse.json(patients);
 	} catch (error) {

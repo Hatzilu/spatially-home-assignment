@@ -1,6 +1,7 @@
 import React from 'react';
 import { BASE_URL } from '../../../../consts/consts';
 import PatientsDataTable from '../PatientsDataTable.tsx/PatientsDataTable';
+import { healthBarriersToMap } from '../../../lib/chart-utils';
 
 // Since we're using Next.JS, i'm having this server component fetch the data from the server
 // That way the content is statically generated, resulting in really fast loading time, since the content is already fetched at build time.
@@ -34,10 +35,11 @@ const PatientsDataWrapper = async () => {
 	if ('error' in patients) {
 		return <div className="px-5">{patients.error}</div>;
 	}
+	const hbIdToNameMap = healthBarriersToMap(healthBarriers);
 
 	return (
 		<div className="flex flex-col gap-5">
-			<PatientsDataTable hbs={healthBarriers} patients={patients} />
+			<PatientsDataTable hbs={healthBarriers} patients={patients} hbIdToNameMap={hbIdToNameMap} />
 		</div>
 	);
 };

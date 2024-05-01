@@ -5,7 +5,7 @@ import { ChartData, HbsEntry, PatientEntry } from '@/types/chart';
  * Convert the Health barrier array into a map, since fetching from an array would take O(n) time while map.get is O(1).
  * @param hbs - health barrier entries
  */
-function healthBarriersToMap(hbs: HbsEntry[]) {
+export function healthBarriersToMap(hbs: HbsEntry[]) {
 	const map = new Map<string, string>();
 	hbs.forEach((barrier) => {
 		map.set(barrier.barrier_id, barrier.barrier_name);
