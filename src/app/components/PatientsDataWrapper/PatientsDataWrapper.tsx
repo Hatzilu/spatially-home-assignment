@@ -1,4 +1,7 @@
 import React from 'react';
+import { PatientTableEntry } from '@/types/table.types';
+import { PatientEntry } from '@/types/chart';
+import { APIError } from '@/types/error';
 import { BASE_URL } from '../../../../consts/consts';
 import PatientsDataTable from '../PatientsDataTable.tsx/PatientsDataTable';
 import { healthBarriersToMap } from '../../../lib/chart-utils';
@@ -27,7 +30,7 @@ const PatientsDataWrapper = async () => {
 	}
 
 	const healthBarriers = await hbsRes.json();
-	const patients = await patientsRes.json();
+	const patients: PatientEntry[] | APIError = await patientsRes.json();
 
 	if ('error' in healthBarriers) {
 		return <div className="px-5">{healthBarriers.error}</div>;
@@ -37,9 +40,13 @@ const PatientsDataWrapper = async () => {
 	}
 	const hbIdToNameMap = healthBarriersToMap(healthBarriers);
 
+	const patientsDisplayData: PatientTableEntry[] = patients.map((p) => ({
+		...p,
+		barrier_name: hbIdToNameMap.get(p.barrier_id)!,
+	}));
 	return (
 		<div className="flex flex-col gap-5">
-			<PatientsDataTable hbs={healthBarriers} patients={patients} hbIdToNameMap={hbIdToNameMap} />
+			<PatientsDataTable hbs={healthBarriers} patients={patientsDisplayData} />
 		</div>
 	);
 };

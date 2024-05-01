@@ -1,24 +1,44 @@
 'use client';
 import React, { ChangeEvent, useMemo, useState } from 'react';
-import { HbsEntry, PatientEntry } from '@/types/chart';
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { HbsEntry } from '@/types/chart';
+import { PatientTableEntry } from '@/types/table.types';
 
 type Props = {
 	readonly hbs: HbsEntry[];
-	readonly patients: PatientEntry[];
-	readonly hbIdToNameMap: Map<string, string>;
+	readonly patients: PatientTableEntry[];
 };
 
-const PatientsDataTable = ({ hbs, patients, hbIdToNameMap }: Props) => {
+const PatientsDataTable = ({ hbs, patients }: Props) => {
 	const [selectedHb, setSelectedHb] = useState('');
-
-	const filteredPatients = useMemo(
-		() => (selectedHb ? patients.filter((p) => p.barrier_id === selectedHb) : patients),
-		[patients, selectedHb],
-	);
 
 	console.log(selectedHb);
 
 	const onChangeHb = (e: ChangeEvent<HTMLSelectElement>) => setSelectedHb(e.target.value);
+
+	const columns = useMemo<ColumnDef<PatientTableEntry, unknown>[]>(
+		() => [
+			{
+				accessorKey: 'first_name',
+				header: 'First name',
+			},
+			{
+				accessorKey: 'last_name',
+				header: 'First name',
+			},
+			{
+				accessorKey: 'barrier_name',
+				header: 'Health barrier',
+			},
+		],
+		[patients],
+	);
+
+	const table = useReactTable({
+		data: patients,
+		columns: columns,
+		getCoreRowModel: getCoreRowModel(),
+	});
 
 	return (
 		<div className="flex flex-col gap-5">
@@ -37,25 +57,26 @@ const PatientsDataTable = ({ hbs, patients, hbIdToNameMap }: Props) => {
 			</select>
 			<table>
 				<thead>
-					<tr>
-						<th scope="col">Patient Name</th>
-						<th scope="col">Health Barrier</th>
-					</tr>
+					{table.getHeaderGroups().map((headerGroup) => (
+						<tr key={headerGroup.id}>
+							{headerGroup.headers.map((header) => (
+								<th key={header.id}>{header.column.columnDef.header?.toString()}</th>
+							))}
+						</tr>
+					))}
 				</thead>
 				<tbody>
-					{filteredPatients.map((p) => {
-						const barrierName = hbIdToNameMap.get(p.barrier_id);
-
-						return (
-							<tr key={p.patient_id}>
-								<td>
-									{p.first_name} {p.last_name}
+					{table.getRowModel().rows.map((row) => (
+						<tr key={row.id}>
+							{row.getVisibleCells().map((cell) => (
+								<td key={cell.id}>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</td>
-								<td>{barrierName || 'N/A'}</td>
-							</tr>
-						);
-					})}
+							))}
+						</tr>
+					))}
 				</tbody>
+				=
 			</table>
 		</div>
 	);
